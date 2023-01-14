@@ -1,10 +1,14 @@
 package com.atguigu.system.controller;
 
 import com.atguigu.common.result.Result;
-import com.atguigu.system.model.system.SysRole;
+import com.atguigu.model.system.SysRole;
+import com.atguigu.model.vo.SysRoleQueryVo;
 import com.atguigu.system.service.SysRoleService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +29,38 @@ public class SysRoleController {
 
     @Autowired
     private SysRoleService sysRoleService;
+
+
+    /**
+     * 保存用户
+     * @param sysRole
+     * @return
+     */
+    @PostMapping("/save")
+    public Result saveRole(@RequestBody SysRole sysRole){
+        boolean save = sysRoleService.save(sysRole);
+        if (save){
+            return Result.ok();
+        }else {
+            return Result.fail();
+        }
+    }
+
+    @ApiOperation(value = "获取分页列表")
+    @GetMapping("/{page}/{limit}")
+    public Result index(
+            @ApiParam(name = "page", value = "当前页码", required = true)
+            @PathVariable Long page,
+
+            @ApiParam(name = "limit", value = "每页记录数", required = true)
+            @PathVariable Long limit,
+
+            @ApiParam(name = "roleQueryVo", value = "查询对象", required = false)
+                    SysRoleQueryVo roleQueryVo) {
+        Page<SysRole> pageParam = new Page<>(page, limit);
+        IPage<SysRole> pageModel = sysRoleService.selectPage(pageParam, roleQueryVo);
+        return Result.ok(pageModel);
+    }
 
     /**
      * 查询全部

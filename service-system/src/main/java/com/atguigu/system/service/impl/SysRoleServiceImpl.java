@@ -1,8 +1,8 @@
 package com.atguigu.system.service.impl;
 
+import com.atguigu.model.system.SysRole;
+import com.atguigu.model.vo.SysRoleQueryVo;
 import com.atguigu.system.mapper.SysRoleMapper;
-import com.atguigu.system.model.system.SysRole;
-import com.atguigu.system.model.vo.SysRoleQueryVo;
 import com.atguigu.system.service.SysRoleService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

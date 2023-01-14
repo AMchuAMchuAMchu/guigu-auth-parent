@@ -1,6 +1,6 @@
 package com.atguigu.system;
 
-import com.atguigu.system.model.system.SysRole;
+import com.atguigu.model.system.SysRole;
 import com.atguigu.system.mapper.SysRoleMapper;
 import com.atguigu.system.service.SysRoleService;
 import org.junit.jupiter.api.Test;
