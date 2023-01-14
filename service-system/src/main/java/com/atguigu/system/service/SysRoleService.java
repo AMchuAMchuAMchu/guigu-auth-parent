@@ -1,6 +1,9 @@
 package com.atguigu.system.service;
 
 import com.atguigu.system.model.system.SysRole;
+import com.atguigu.system.model.vo.SysRoleQueryVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * Author ==> _02雪乃赤瞳楪祈校条祭_艾米丽可锦木千束木更七草荠_制作委员会_start
  */
 public interface SysRoleService extends IService<SysRole> {
+    IPage<SysRole> selectPage(Page<SysRole> pageParam, SysRoleQueryVo roleQueryVo);
 }
