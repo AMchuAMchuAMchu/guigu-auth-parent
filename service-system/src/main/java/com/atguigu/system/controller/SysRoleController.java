@@ -30,12 +30,52 @@ public class SysRoleController {
     @Autowired
     private SysRoleService sysRoleService;
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @ApiOperation("批量删除")
+    @DeleteMapping("/batchRemove")
+    public Result batchRemove(@RequestBody List<Long> ids){
+        boolean b = sysRoleService.removeByIds(ids);
+        return Result.ok();
+    }
+
+    /**
+     * 修改用户信息
+     * @param sysRole
+     * @return
+     */
+    @ApiOperation("最终修改")
+    @PostMapping("/update")
+    public Result updateById(@RequestBody SysRole sysRole){
+        boolean b = sysRoleService.updateById(sysRole);
+        if (b){
+            return Result.ok();
+        }else {
+            return Result.fail();
+        }
+    }
+
+    /**
+     * 根据id查询用户
+     * @param id
+     * @return
+     */
+    @ApiOperation("根据id查询用户")
+    @PostMapping("/findRoleById/{id}")
+    public Result findRoleById(@PathVariable("id") Long id){
+        SysRole sysRole = sysRoleService.getById(id);
+        return Result.ok(sysRole);
+    }
 
     /**
      * 保存用户
      * @param sysRole
      * @return
      */
+    @ApiOperation("保存用户")
     @PostMapping("/save")
     public Result saveRole(@RequestBody SysRole sysRole){
         boolean save = sysRoleService.save(sysRole);
