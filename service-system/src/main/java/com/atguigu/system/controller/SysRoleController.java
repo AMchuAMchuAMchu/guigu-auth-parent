@@ -109,6 +109,7 @@ public class SysRoleController {
     @ApiOperation("查询所有记录")
     @GetMapping("/findAll")
     public Result findAll(){
+        int i = 9/0;
         List<SysRole> sysRoleList = sysRoleService.list();
         return Result.ok(sysRoleList);
     }
