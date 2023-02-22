@@ -22,6 +22,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public IPage<SysUser> selectPage(Page<SysUser> sysUserPage, SysUserQueryVo sysUserQueryVo) {
-        return null;
+        return baseMapper.selectPage(sysUserPage,sysUserQueryVo);
+    }
+
+    //更改用户状态
+    @Override
+    public void updateStatus(String id, Integer status) {
+        SysUser sysUser = baseMapper.selectById(id);
+        sysUser.setStatus(status);
+        baseMapper.updateById(sysUser);
     }
 }

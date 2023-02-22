@@ -2,6 +2,7 @@ package com.atguigu.system.controller;
 
 import com.atguigu.common.result.Result;
 import com.atguigu.model.system.SysRole;
+import com.atguigu.model.vo.AssginRoleVo;
 import com.atguigu.model.vo.SysRoleQueryVo;
 import com.atguigu.system.service.SysRoleService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description ==> TODO
@@ -29,6 +31,23 @@ public class SysRoleController {
 
     @Autowired
     private SysRoleService sysRoleService;
+
+
+
+    @ApiOperation("给用户分配角色")
+    @PostMapping("/doAssign")
+    public Result doAssign(@RequestBody AssginRoleVo assginRoleVo){
+        sysRoleService.doAssign(assginRoleVo);
+        return Result.ok();
+    }
+
+
+    @ApiOperation("获取用户的角色数据")
+    @GetMapping("toAssign/{userId}")
+    public Result toAssign(@PathVariable String userId){
+        Map<String,Object> roleMap = sysRoleService.getRolesByUerId(userId);
+        return Result.ok(roleMap);
+    }
 
     /**
      * 批量删除
