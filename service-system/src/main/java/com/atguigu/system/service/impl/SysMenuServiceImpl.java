@@ -3,11 +3,13 @@ package com.atguigu.system.service.impl;
 import com.atguigu.model.system.SysMenu;
 import com.atguigu.model.system.SysRoleMenu;
 import com.atguigu.model.vo.AssginMenuVo;
+import com.atguigu.model.vo.RouterVo;
 import com.atguigu.system.exception.GuiguException;
 import com.atguigu.system.mapper.SysMenuMapper;
 import com.atguigu.system.mapper.SysRoleMenuMapper;
 import com.atguigu.system.service.SysMenuService;
 import com.atguigu.system.utils.MenuHelper;
+import com.atguigu.system.utils.RouterHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,5 +113,35 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         });
 
 
+    }
+
+    //根据用户id查询菜单权限
+    @Override
+    public List<RouterVo> getUserMenuList(String id) {
+        List<SysMenu> sysMenusList = null;
+        if ("1".equals(id)){
+            QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>();
+
+            queryWrapper.eq("status",1);
+
+            queryWrapper.orderByAsc("sort_value");
+
+            sysMenusList = baseMapper.selectList(queryWrapper);
+        }else{
+            sysMenusList = baseMapper.findMenuListUserId(id);
+        }
+
+        List<SysMenu> sysMenuTreeList = MenuHelper.buildTree(sysMenusList);
+
+        List<RouterVo> routerVoList = RouterHelper.buildRouters(sysMenuTreeList);
+
+
+        return routerVoList;
+    }
+
+    //根据用户id查询按钮权限
+    @Override
+    public List<String> getUserButtonList(String id) {
+        return null;
     }
 }
